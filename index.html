@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch Deck — Nikhil Kumar</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131f;
+    --surface2: #1a1a2e;
+    --border: #ffffff12;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --text: #f0f0ff;
+    --muted: #8888aa;
+    --card: #16162a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ─── Slide Container ─── */
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ─── Navigation ─── */
+  .nav {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+    background: #ffffff08;
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 50px;
+  }
+
+  .nav button {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover { border-color: var(--accent); color: var(--text); }
+  .nav button:active { transform: scale(0.96); }
+
+  .nav .slide-count {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* ─── Progress bar ─── */
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.4s ease;
+    z-index: 200;
+  }
+
+  /* ─── Slide number badge ─── */
+  .slide-label {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── Typography ─── */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  p.lead {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  .highlight { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .accent3 { color: var(--accent3); }
+
+  /* ─── Gradient text ─── */
+  .grad {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grad-green {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Cards ─── */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: 960px;
+    margin-top: 32px;
+  }
+
+  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent); }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .card.red::before { background: linear-gradient(90deg, var(--accent2), transparent); }
+  .card.green::before { background: linear-gradient(90deg, var(--accent3), transparent); }
+  .card.purple::before { background: linear-gradient(90deg, #a855f7, transparent); }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card p {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ─── Stat blocks ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+  }
+
+  .stat-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  /* ─── Timeline ─── */
+  .timeline {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .timeline-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .timeline-dot {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 12px;
+    border: 3px solid var(--bg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-dot.d2 { background: #7c3aed; }
+  .timeline-dot.d3 { background: #db2777; }
+  .timeline-dot.d4 { background: var(--accent2); }
+
+  .timeline-week {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .timeline-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ─── Comparison table ─── */
+  .compare-table {
+    width: 100%;
+    max-width: 820px;
+    border-collapse: collapse;
+    margin-top: 32px;
+    text-align: left;
+  }
+
+  .compare-table th {
+    padding: 12px 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table td {
+    padding: 14px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table tr:hover td { background: var(--card); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .badge.red { background: #ff658420; color: var(--accent2); }
+  .badge.green { background: #43e97b20; color: var(--accent3); }
+  .badge.purple { background: #6c63ff20; color: var(--accent); }
+
+  /* ─── Cover slide specific ─── */
+  .cover-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 40%, #6c63ff18 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, #ff658412 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .cover-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ─── Problem pill ─── */
+  .problem-pill {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: left;
+    max-width: 820px;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .problem-pill .icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .problem-pill .content h4 { font-size: 14px; margin-bottom: 4px; }
+  .problem-pill .content p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ─── Proof point ─── */
+  .proof-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: left;
+    width: 100%;
+    max-width: 820px;
+    margin-bottom: 10px;
+  }
+
+  .proof-row .metric {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .proof-row .desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .proof-row .tag {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ─── Pricing ─── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 32px;
+  }
+
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .pricing-card:hover { transform: translateY(-4px); }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #6c63ff12, #16162a);
+  }
+
+  .pricing-card .popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .pricing-name {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .pricing-price {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 4px;
+  }
+
+  .pricing-cycle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    text-align: left;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .pricing-features li::before {
+    content: '✓ ';
+    color: var(--accent3);
+    font-weight: 700;
+  }
+
+  /* ─── CTA slide ─── */
+  .cta-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 24px;
+    padding: 48px 60px;
+    max-width: 700px;
+    margin-top: 32px;
+  }
+
+  .cta-box h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    color: white;
+  }
+
+  .cta-box p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: var(--accent);
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    margin: 6px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-btn:hover { transform: scale(1.03); }
+
+  .cta-btn.ghost {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+  }
+
+  /* ─── Two column layout ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    width: 100%;
+    max-width: 960px;
+    margin-top: 32px;
+    text-align: left;
+  }
+
+  .col-header {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .col-header.red { color: var(--accent2); }
+  .col-header.green { color: var(--accent3); }
+
+  /* ─── Keyboard hint ─── */
+  .key-hint {
+    position: fixed;
+    bottom: 100px;
+    right: 32px;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  /* ─── Selector overlay ─── */
+  .selector {
+    position: fixed;
+    inset: 0;
+    background: #000000cc;
+    backdrop-filter: blur(20px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .selector.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .selector-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    width: 90%;
+  }
+
+  .selector-box h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+
+  .selector-box p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .client-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .client-opt {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .client-opt:hover, .client-opt.selected {
+    border-color: var(--accent);
+    background: #6c63ff15;
+  }
+
+  .client-opt h4 { font-size: 14px; margin-bottom: 4px; }
+  .client-opt p { font-size: 12px; color: var(--muted); }
+
+  .selector-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+
+  .sel-btn {
+    padding: 10px 24px;
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .sel-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .logo {
+    position: fixed;
+    top: 24px;
+    left: 32px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--muted);
+    z-index: 100;
+  }
+
+  .logo span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo">NK<span>.</span></div>
+
+<!-- Progress bar -->
+<div class="progress" id="progress"></div>
+
+<!-- Slide label -->
+<div class="slide-label" id="slideLabel"></div>
+
+<!-- Keyboard hint -->
+<div class="key-hint">← → to navigate · C to choose client</div>
+
+<!-- Client selector overlay -->
+<div class="selector" id="selector">
+  <div class="selector-box">
+    <h3>Customize for Client</h3>
+    <p>Select the client segment to tailor the deck's pain points, proof points, and pricing.</p>
+    <div class="client-options">
+      <div class="client-opt selected" data-client="cdp" onclick="selectClient(this)">
+        <h4>📊 CDP / Analytics</h4>
+        <p>D2C brands overspending on Mixpanel, CleverTap, Segment</p>
+      </div>
+      <div class="client-opt" data-client="voice" onclick="selectClient(this)">
+        <h4>🎙️ Voice AI Sales</h4>
+        <p>Companies with outbound tele-calling teams to replace</p>
+      </div>
+      <div class="client-opt" data-client="rto" onclick="selectClient(this)">
+        <h4>📦 COD Fraud / RTO</h4>
+        <p>Ecommerce brands losing ₹5–12L/month to returns</p>
+      </div>
+      <div class="client-opt" data-client="assistant" onclick="selectClient(this)">
+        <h4>🤖 AI Assistant</h4>
+        <p>Brands with high support cost or product discovery gap</p>
+      </div>
+      <div class="client-opt" data-client="pipeline" onclick="selectClient(this)">
+        <h4>⚡ Real-Time Pipeline</h4>
+        <p>Omnichannel brands with fragmented, siloed data</p>
+      </div>
+      <div class="client-opt" data-client="rec" onclick="selectClient(this)">
+        <h4>🎯 Recommendation</h4>
+        <p>Fashion/retail brands needing personalization engine</p>
+      </div>
+    </div>
+    <div class="selector-actions">
+      <button class="sel-btn" onclick="closeSelector()">Cancel</button>
+      <button class="sel-btn primary" onclick="applyClient()">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDES
+═══════════════════════════════════════════════════ -->
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: Cover -->
+  <div class="slide active" id="slide-0">
+    <div class="cover-bg"></div>
+    <div class="cover-grid"></div>
+    <div class="cover-content">
+      <div class="eyebrow">Confidential · 2026</div>
+      <h1 id="cover-title" class="grad">Your Data Is Worth<br>10× More Than You Think.</h1>
+      <p class="lead" id="cover-subtitle">A proposal to build production-grade data & AI infrastructure that compounds — without hiring a full team or spending on bloated SaaS.</p>
+      <div style="margin-top: 40px; display: flex; gap: 16px; align-items: center;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">N</div>
+        <div style="text-align: left;">
+          <div style="font-weight: 600; font-size: 14px;">Nikhil Kumar</div>
+          <div style="color: var(--muted); font-size: 12px;">Senior Data & AI Engineer · 3+ Years · Startups & Scale</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: The Problem -->
+  <div class="slide" id="slide-1">
+    <div class="eyebrow">The Problem</div>
+    <h2 id="prob-title">You're Bleeding ₹<span id="prob-amount" class="accent2">15–25L</span>/year<br>on tools that don't talk to each other.</h2>
+    <div style="margin-top: 8px; max-width: 820px; width: 100%;">
+      <div class="problem-pill" id="prob1">
+        <span class="icon">💸</span>
+        <div class="content">
+          <h4 id="prob1-title">Mixpanel + CleverTap + CDP: Triple spend</h4>
+          <p id="prob1-desc">Most brands pay for 3 tools doing overlapping jobs. No single customer profile. No unified identity graph across Shopify, WhatsApp, and ad platforms.</p>
+        </div>
+      </div>
+      <div class="problem-pill" id="prob2">
+        <span class="icon">🚪</span>
+        <div class="content">
+          <h4 id="prob2-title">You can't answer: "What is my LTV by cohort?"</h4>
+          <p id="prob2-desc">Growth managers run campaigns on gut feel. No real-time behavioral signal. No predictive model for churn, RTO, or upsell. Data is stuck in dashboards nobody trusts.</p>
+        </div>
+      </div>
+      <div class="problem-pill" id="prob3">
+        <span class="icon">⏳</span>
+        <div class="content">
+          <h4 id="prob3-title">Hiring a senior data engineer costs ₹35–50L/year</h4>
+          <p id="prob3-desc">And they won't even start building real infra for 3 months. Meanwhile, you keep paying for SaaS that owns your data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Cost of Inaction -->
+  <div class="slide" id="slide-2">
+    <div class="eyebrow">Cost of Inaction</div>
+    <h2>Every month you wait,<br><span class="accent2">this compounds.</span></h2>
+    <div class="stat-grid" id="stat-grid">
+      <div class="stat-block">
+        <div class="stat-num grad" id="stat1-num">₹15L</div>
+        <div class="stat-label" id="stat1-label">Annual tool spend on fragmented analytics stack</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num" style="color: var(--accent2);" id="stat2-num">68%</div>
+        <div class="stat-label" id="stat2-label">Of that data is never activated in real-time campaigns</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num grad-green" id="stat3-num">0</div>
+        <div class="stat-label" id="stat3-label">Predictive models running on your customer data right now</div>
+      </div>
+    </div>
+    <p class="lead" id="inaction-subtitle" style="margin-top: 32px; font-size: 1rem;">The brands that win in 2026 are the ones who <strong style="color: var(--text);">own their data infrastructure</strong> — not rent it.</p>
+  </div>
+
+  <!-- SLIDE 4: What I've Built -->
+  <div class="slide" id="slide-3">
+    <div class="eyebrow">Proof · Not Promises</div>
+    <h2>Built this. In production.<br><span class="grad">At scale.</span></h2>
+    <div style="width: 100%; max-width: 820px; margin-top: 24px;">
+      <div class="proof-row">
+        <div class="metric grad">1M+</div>
+        <div class="desc"><strong>Pulse CDP — Series B Consumer Platform</strong> — PB-scale CDP replacing Mixpanel for a 1M+ user base. Real-time Kafka → PyFlink → BigQuery pipeline. 10M+ events/day, &lt;10s schema-break recovery.</div>
+        <div class="tag"><span class="badge purple">CDP</span></div>
+      </div>
+      <div class="proof-row">
+        <div class="metric" style="color: var(--accent3);">68%↓</div>
+        <div class="desc"><strong>AI Voice Sales Engine</strong> — Built Hindi/English voice agent (Pipecat + Sarvam TTS) that qualifies 500+ leads/week at 68% lower cost than human agents. &lt;80ms p95 latency.</div>
+        <div class="tag"><span class="badge green">Voice AI</span></div>
+      </div>
+      <div class="proof-row">
+        <div class="metric" style="color: var(--accent2);">42%↓</div>
+        <div class="desc"><strong>Fraud ML at Vue.ai</strong> — Built fraud detection model for $250M+ logistics client. 42% fraud reduction in 3 months. OTS engine drove $10M revenue uplift for fashion retail.</div>
+        <div class="tag"><span class="badge red">ML / Fraud</span></div>
+      </div>
+      <div class="proof-row">
+        <div class="metric grad">$42K</div>
+        <div class="desc"><strong>Saved annually</strong> — by replacing Mixpanel with custom-built CDP. <em>This is what's possible when you own your infra instead of renting it.</em></div>
+        <div class="tag"><span class="badge purple">ROI</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: The Solution -->
+  <div class="slide" id="slide-4">
+    <div class="eyebrow">The Solution</div>
+    <h2 id="sol-title">Your Own <span class="grad">Customer Data Platform</span><br>in 8 weeks. Zero vendor lock-in.</h2>
+    <div class="card-grid cols-3" id="solution-cards">
+      <div class="card">
+        <span class="card-icon">🧠</span>
+        <h3 id="sol1-title">Unified Identity Graph</h3>
+        <p id="sol1-desc">One customer profile across Shopify, WhatsApp, Meta, RazorPay — regardless of where they interact. Built on your infra, not ours.</p>
+      </div>
+      <div class="card purple">
+        <span class="card-icon">⚡</span>
+        <h3 id="sol2-title">Real-Time Event Pipeline</h3>
+        <p id="sol2-desc">Kafka → Flink → BigQuery. Every browse, add-to-cart, purchase, and abandonment triggers in milliseconds — not batch hours.</p>
+      </div>
+      <div class="card green">
+        <span class="card-icon">📈</span>
+        <h3 id="sol3-title">LTV & Cohort Analytics</h3>
+        <p id="sol3-desc">Answer the questions your current stack can't: LTV by acquisition channel, churn probability, best segment to activate today.</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 24px; font-size: 0.95rem; max-width: 820px;" id="sol-footer">You get the code, the infra, the docs. No monthly SaaS bill. No vendor who goes down during sale season.</p>
+  </div>
+
+  <!-- SLIDE 6: How It's Different -->
+  <div class="slide" id="slide-5">
+    <div class="eyebrow">Competitive Landscape</div>
+    <h2>Why not <span class="accent2">just buy</span> an off-the-shelf tool?</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Cost / Year</th>
+          <th>Data Ownership</th>
+          <th>Customization</th>
+          <th>Lock-in Risk</th>
+        </tr>
+      </thead>
+      <tbody id="compare-body">
+        <tr>
+          <td>CleverTap + Mixpanel</td>
+          <td class="accent2">₹15–25L</td>
+          <td><span class="badge red">Vendor</span></td>
+          <td><span class="badge red">Limited</span></td>
+          <td><span class="badge red">High</span></td>
+        </tr>
+        <tr>
+          <td>Segment CDP</td>
+          <td class="accent2">$24K–60K</td>
+          <td><span class="badge red">Vendor</span></td>
+          <td><span class="badge red">Template</span></td>
+          <td><span class="badge red">High</span></td>
+        </tr>
+        <tr>
+          <td>Hire a Data Engineer</td>
+          <td class="accent2">₹35–50L</td>
+          <td><span class="badge green">You own</span></td>
+          <td><span class="badge green">Full</span></td>
+          <td><span class="badge green">None</span></td>
+        </tr>
+        <tr style="background: #6c63ff08;">
+          <td><strong>✦ Custom Build (Me)</strong></td>
+          <td class="accent3"><strong>₹8–14L one-time</strong></td>
+          <td><span class="badge green">You own</span></td>
+          <td><span class="badge green">Full</span></td>
+          <td><span class="badge green">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="lead" style="margin-top: 24px; font-size: 0.9rem;">Same ownership as hiring, at ¼ the cost — and it ships in 8 weeks, not 6 months.</p>
+  </div>
+
+  <!-- SLIDE 7: Delivery Plan -->
+  <div class="slide" id="slide-6">
+    <div class="eyebrow">Delivery Plan</div>
+    <h2>From kickoff to <span class="accent3">live in production</span><br>in 8 weeks.</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">🔍</div>
+        <div class="timeline-week">Week 1–2</div>
+        <div class="timeline-title">Audit & Architecture</div>
+        <div class="timeline-desc">Data source mapping, schema design, infra setup on your GCP/AWS</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot d2">⚙️</div>
+        <div class="timeline-week">Week 3–4</div>
+        <div class="timeline-title">Pipeline Build</div>
+        <div class="timeline-desc">Kafka ingestion, identity stitching, real-time Flink jobs</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot d3">🧪</div>
+        <div class="timeline-week">Week 5–6</div>
+        <div class="timeline-title">Feature Layer</div>
+        <div class="timeline-desc">BigQuery analytics, LTV models, cohort engine, dashboards</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot d4">🚀</div>
+        <div class="timeline-week">Week 7–8</div>
+        <div class="timeline-title">Go-Live + Handoff</div>
+        <div class="timeline-desc">Load testing, docs, team training, 30-day support window</div>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 40px; font-size: 0.95rem;">You own everything at the end. Source code, infra, runbooks — no dependency on me to keep it running.</p>
+  </div>
+
+  <!-- SLIDE 8: Investment -->
+  <div class="slide" id="slide-7">
+    <div class="eyebrow">Investment</div>
+    <h2>Simple, transparent <span class="grad">pricing.</span><br>No surprises.</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Audit + Roadmap</div>
+        <div class="pricing-price" style="color: var(--accent);">₹50K</div>
+        <div class="pricing-cycle">one-time · 2 weeks</div>
+        <ul class="pricing-features">
+          <li>Full data source audit</li>
+          <li>Architecture blueprint</li>
+          <li>ROI calculation</li>
+          <li>No-obligation deliverable</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <div class="popular">Most Popular</div>
+        <div class="pricing-name">Build + Deploy</div>
+        <div class="pricing-price grad" id="price-build">₹8–12L</div>
+        <div class="pricing-cycle">one-time · 8 weeks</div>
+        <ul class="pricing-features" id="price-features">
+          <li>Complete CDP build</li>
+          <li>Real-time pipeline</li>
+          <li>Analytics dashboards</li>
+          <li>30-day post-launch support</li>
+          <li>Full code ownership</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Retain + Evolve</div>
+        <div class="pricing-price" style="color: var(--accent3);">₹1.5L</div>
+        <div class="pricing-cycle">per month · ongoing</div>
+        <ul class="pricing-features">
+          <li>Feature additions</li>
+          <li>Model retraining</li>
+          <li>Performance monitoring</li>
+          <li>Priority async support</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 24px; font-size: 0.9rem;">Start with the ₹50K audit. If the blueprint doesn't impress you, you owe nothing more.</p>
+  </div>
+
+  <!-- SLIDE 9: Why Now -->
+  <div class="slide" id="slide-8">
+    <div class="eyebrow">Why Now</div>
+    <h2>The window to move first<br><span class="accent2">is closing fast.</span></h2>
+    <div class="two-col">
+      <div>
+        <div class="col-header red">What's happening right now:</div>
+        <div class="card red" style="margin-bottom: 12px;">
+          <h3>Your competitors are building this</h3>
+          <p>Meesho cut customer call costs 75% with GenAI voice bots. Nykaa is unifying offline + online identity. First movers compound every month — late movers pay to catch up.</p>
+        </div>
+        <div class="card red">
+          <h3>AI infra cost is dropping 10× per year</h3>
+          <p>What costs ₹10L to build today will cost ₹20L to maintain in a legacy SaaS stack two years from now. The time to build is when it's cheapest.</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-header green">What you get by acting now:</div>
+        <div class="card green" style="margin-bottom: 12px;">
+          <h3>12-month head start on your cohort</h3>
+          <p>Every personalization touchpoint, every avoided RTO, every AI-qualified lead — these compound into sustainable CAC advantage while competitors are still evaluating vendors.</p>
+        </div>
+        <div class="card green">
+          <h3>Own the infra, not the invoice</h3>
+          <p>When you own the code, you never negotiate pricing with a vendor who knows you're dependent. That's leverage worth far more than the build cost.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CTA -->
+  <div class="slide" id="slide-9">
+    <div class="cover-bg"></div>
+    <div class="cover-grid"></div>
+    <div class="cover-content">
+      <div class="eyebrow">Next Step</div>
+      <div class="cta-box">
+        <h2>Let's start with a<br>free 45-minute audit.</h2>
+        <p>I'll review your current data stack, identify the 3 highest-ROI opportunities, and show you exactly what can be built — no pitch, no fluff, just a working blueprint you can use whether you work with me or not.</p>
+        <a class="cta-btn" href="mailto:nikhil.kumar707128@gmail.com">📩 Book a Call</a>
+        <a class="cta-btn ghost" href="https://linkedin.com/in/nikhill-kumarr" target="_blank">🔗 LinkedIn</a>
+      </div>
+      <div style="margin-top: 32px; display: flex; gap: 40px; color: var(--muted); font-size: 13px;">
+        <span>📞 +91 95231 20037</span>
+        <span>📧 nikhil.kumar707128@gmail.com</span>
+        <span>🌐 Bangalore, India</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prevSlide()">← Prev</button>
+  <span class="slide-count" id="slideCount">1 / 10</span>
+  <button onclick="nextSlide()">Next →</button>
+  <button onclick="openSelector()" style="border-color: var(--accent); color: var(--accent);">⚙ Client</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+const TOTAL = 10;
+let current = 0;
+let selectedClient = 'cdp';
+let pendingClient = 'cdp';
+
+// ── Client content map ──────────────────────────────
+const clients = {
+  cdp: {
+    coverTitle: 'Your Data Is Worth<br>10× More Than You Think.',
+    coverSubtitle: 'A proposal to build a production-grade Customer Data Platform that replaces CleverTap + Mixpanel — cheaper, and you own everything.',
+    probTitle: 'You\'re bleeding ₹<span class="accent2">15–25L</span>/year<br>on tools that don\'t talk to each other.',
+    probAmount: '15–25L',
+    prob1Title: 'Mixpanel + CleverTap + CDP: Triple spend',
+    prob1Desc: 'Most D2C brands pay for 3 tools doing overlapping jobs. No single customer profile. No unified identity graph across Shopify, WhatsApp, and ad platforms.',
+    prob2Title: 'You can\'t answer: "What is my LTV by cohort?"',
+    prob2Desc: 'Growth managers run campaigns on gut feel. No real-time behavioral signal. No predictive model for churn or upsell. Data sits in dashboards nobody trusts.',
+    prob3Title: 'Hiring a senior data engineer costs ₹35–50L/year',
+    prob3Desc: 'And they won\'t even start building real infra for 3 months. Meanwhile, you keep paying for SaaS that owns your data.',
+    stat1Num: '₹15L', stat1Label: 'Annual tool spend on fragmented analytics stack',
+    stat2Num: '68%', stat2Label: 'Of behavioral data never activated in real-time',
+    stat3Num: '0', stat3Label: 'Predictive models running on your customer data right now',
+    inactionSubtitle: 'Brands that win in 2026 own their data infrastructure — not rent it from vendors who control your pricing.',
+    solTitle: 'Your Own <span class="grad">Customer Data Platform</span><br>in 8 weeks. Zero vendor lock-in.',
+    sol1Title: 'Unified Identity Graph', sol1Desc: 'One customer profile across Shopify, WhatsApp, Meta, RazorPay — regardless of where they interact.',
+    sol2Title: 'Real-Time Event Pipeline', sol2Desc: 'Kafka → Flink → BigQuery. Every browse, add-to-cart, and abandonment triggers in milliseconds, not batch hours.',
+    sol3Title: 'LTV & Cohort Analytics', sol3Desc: 'Answer the questions your current stack can\'t: LTV by channel, churn probability, best segment to activate today.',
+    solFooter: 'You get the code, the infra, the docs. No monthly SaaS bill. No vendor outage during sale season.',
+    priceBuild: '₹8–12L',
+    priceFeatures: ['Complete CDP build', 'Real-time pipeline', 'Cohort analytics', '30-day support', 'Full code ownership'],
+  },
+  voice: {
+    coverTitle: 'Replace 7 of 10 Tele-Callers<br>with an AI that <span class="grad">Never Sleeps.</span>',
+    coverSubtitle: 'A proposal to deploy a production-grade Hindi/English voice AI agent for outbound sales, reorder nudges, and lead qualification — at ₹2/call.',
+    probTitle: 'Your tele-calling team costs<br>₹<span class="accent2">25–40L</span>/year and connects 12% of calls.',
+    probAmount: '25–40L',
+    prob1Title: 'Manual dialing: 8–15% connect rate',
+    prob1Desc: 'A tele-caller makes 80–120 dials/day and reaches 10–15 customers. An AI agent dials 500+ numbers/day with smart scheduling — 35–55% connect rate.',
+    prob2Title: 'Each agent costs ₹25–35K/month + overhead',
+    prob2Desc: 'A team of 10 agents costs ₹30–40L/year in salaries alone. AI voice delivers the same output for ₹50–80K/month in infra — 80% cost reduction.',
+    prob3Title: 'Quality is inconsistent. Agents have bad days.',
+    prob3Desc: 'Script compliance drops in the afternoon. Objection handling varies by agent. An AI delivers the same quality at 9 AM and 9 PM, every day.',
+    stat1Num: '₹30L', stat1Label: 'Annual cost of 10-person tele-calling team',
+    stat2Num: '12%', stat2Label: 'Average connect rate with manual outbound dialing',
+    stat3Num: '75%', stat3Label: 'Cost cut achieved by Meesho with GenAI voice (TechCrunch)',
+    inactionSubtitle: 'Meesho cut customer call costs 75% with GenAI voice in 2024. Every month without AI voice, your CAC disadvantage compounds.',
+    solTitle: 'AI Voice Agent that qualifies<br><span class="grad">500+ leads/week</span> at ₹2/call.',
+    sol1Title: 'Hindi + English, Zero Latency', sol1Desc: 'Native Sarvam TTS for natural Hindi. <80ms p95 latency. Sounds like a real human, handles interruptions and objections.',
+    sol2Title: 'Smart Scheduling + CRM Sync', sol2Desc: 'Calls at optimal time windows. Auto-updates Leadsquared / Zoho / custom CRM with call outcomes, interest signals, and next steps.',
+    sol3Title: 'Human Handoff When Needed', sol3Desc: 'AI qualifies interest, captures intent, then hands warm leads to your best closers. Never replaces human judgment — augments it.',
+    solFooter: 'Built on your infra. You own the call recordings, the transcripts, the models. No per-call SaaS pricing that scales against you.',
+    priceBuild: '₹5–8L',
+    priceFeatures: ['Voice agent build + training', 'Hindi + English support', 'CRM integration', 'Call recording + transcripts', '30-day tuning period'],
+  },
+  rto: {
+    coverTitle: 'Stop Losing ₹40L/month<br>to COD Returns You <span class="accent2">Could Predict.</span>',
+    coverSubtitle: 'A proposal to deploy an ML-powered RTO risk scorer that cuts return-to-origin rates by 30–40% — with zero impact on genuine customers.',
+    probTitle: 'COD RTO is costing you<br>₹<span class="accent2">9–12L</span>/month in pure logistics waste.',
+    probAmount: '9–12L/mo',
+    prob1Title: '26% of COD orders fail nationally — yours may be higher',
+    prob1Desc: 'Fashion and home décor COD RTO rates hit 40–50%. At ₹180–240 per failed delivery, 5,000 COD orders/month means ₹9–12L in pure logistics burn every month.',
+    prob2Title: 'Manual pincode blacklisting misses 60% of bad actors',
+    prob2Desc: 'Your logistics team manually flags pincodes. But RTO is driven by customer behavior patterns — phone number history, order frequency, time-of-day, price sensitivity — not just geography.',
+    prob3Title: 'You\'re losing customers trying to reduce RTO manually',
+    prob3Desc: 'Blocking COD for entire pincodes means genuine customers switch to competitors. A surgical ML model blocks the 8% of bad actors while 92% of legitimate buyers go through seamlessly.',
+    stat1Num: '₹12L', stat1Label: 'Monthly RTO loss for brand doing 5K COD orders/month',
+    stat2Num: '26%', stat2Label: 'Average national COD order failure rate (Shipway 2024)',
+    stat3Num: '42%', stat3Label: 'Fraud reduction achieved at $250M logistics client (Vue.ai)',
+    inactionSubtitle: 'Every month without an RTO predictor, you\'re gifting your margin to logistics companies. This is fixable with data you already have.',
+    solTitle: 'ML RTO Predictor that cuts<br><span class="accent3">returns by 30–40%</span> in 6 weeks.',
+    sol1Title: 'Behavioral Risk Scoring', sol1Desc: 'Model trained on your order history: phone number age, return rate, order frequency, pincode density, time-of-day patterns, price point signals.',
+    sol2Title: 'Smart COD Gating', sol2Desc: 'High-risk orders → OTP verification or prepaid-only. Low-risk orders → frictionless COD. Threshold tuned to your margin tolerance.',
+    sol3Title: 'Real-Time API Integration', sol3Desc: 'Plugs into your Shopify checkout or OMS. Decision in <100ms. Customer experience unchanged for the 90%+ of orders that are legitimate.',
+    solFooter: 'Start with a free audit of your last 3 months of COD data. I\'ll show you the predicted RTO savings before you commit to anything.',
+    priceBuild: '₹4–7L',
+    priceFeatures: ['RTO prediction model', 'Shopify/OMS integration', 'OTP verification flow', 'Dashboard + alerting', '3-month model tuning'],
+  },
+  assistant: {
+    coverTitle: 'An AI That Converts Browsers<br>into Buyers — <span class="grad">24/7.</span>',
+    coverSubtitle: 'A proposal to deploy a personalized AI assistant for product discovery, customer support, and conversion — across your website and WhatsApp.',
+    probTitle: 'Support tickets cost ₹<span class="accent2">180–350</span> each.<br>Your AI could resolve 70% of them instantly.',
+    probAmount: '₹180–350',
+    prob1Title: '65% of customers abandon because they can\'t find what they want',
+    prob1Desc: 'Search bars don\'t understand intent. "Blue kurti for wedding" should return personalized results based on body type, budget, and occasion — not keyword matches.',
+    prob2Title: 'Support team handles the same 20 questions all day',
+    prob2Desc: '"Where is my order?", "What\'s your return policy?", "Do you have size XL?" — each costs ₹180–350 in agent time. An AI handles these at ₹2/conversation.',
+    prob3Title: 'No upsell at the moment of highest intent',
+    prob3Desc: 'When a customer asks about a product, that\'s the highest-intent moment. A trained AI can surface the right cross-sell, offer, or urgency signal — your current site can\'t.',
+    stat1Num: '₹350', stat1Label: 'Cost per customer support ticket (agent time + overhead)',
+    stat2Num: '70%', stat2Label: 'Support queries that can be resolved by AI without human intervention',
+    stat3Num: '3×', stat3Label: 'Conversion uplift when personalized product discovery is added (industry avg)',
+    inactionSubtitle: 'Every support ticket your team handles manually is a missed AI conversation that could have also driven a purchase.',
+    solTitle: 'Conversational AI that discovers,<br>supports, and <span class="grad">converts</span>.',
+    sol1Title: 'Semantic Product Discovery', sol1Desc: 'Vector search understands intent, not just keywords. "Something for mom\'s birthday under ₹500" returns curated results, not a keyword dump.',
+    sol2Title: 'WhatsApp + Web Support Agent', sol2Desc: 'Resolves 70%+ of support queries autonomously. Seamless human handoff for complex cases. Integrates with your existing helpdesk.',
+    sol3Title: 'Personalized Upsell + Follow-up', sol3Desc: 'Remembers each customer\'s history. Surfaces the right offer at the right time. Turns support conversations into revenue.',
+    solFooter: 'Deployed on your infra. Trained on your product catalog, policies, and FAQs. Live in 6 weeks.',
+    priceBuild: '₹6–10L',
+    priceFeatures: ['Full AI assistant build', 'WhatsApp + web integration', 'Product catalog training', 'Support ticket deflection', 'Analytics dashboard'],
+  },
+  pipeline: {
+    coverTitle: 'Your 3 Data Sources<br>Are <span class="accent2">Talking Past Each Other.</span>',
+    coverSubtitle: 'A proposal to build a real-time event pipeline that unifies your online, offline, and quick-commerce data — so you can act on it in milliseconds, not days.',
+    probTitle: 'Shopify + POS + Blinkit data<br>are in <span class="accent2">3 silos</span> with no real-time bridge.',
+    probAmount: '3 silos',
+    prob1Title: 'Customer browsed in-store, bought online — you don\'t know',
+    prob1Desc: 'Your offline POS (Ginesys/Posist) and Shopify don\'t share identity. You\'re retargeting people who already bought. You\'re missing the ones who browsed in-store and left.',
+    prob2Title: 'Your "real-time" campaigns run on yesterday\'s data',
+    prob2Desc: 'Batch ETL jobs at 2 AM mean your cart abandonment email goes out 8 hours after the customer left — they\'ve already bought from a competitor or forgotten the intent.',
+    prob3Title: 'Quick commerce (Blinkit/Zepto) is a black box',
+    prob3Desc: 'No buyer identity, no behavioral data. You know SKUs sold but not who bought them. That\'s 15–25% of your volume with zero customer intelligence.',
+    stat1Num: '8hrs', stat1Label: 'Average delay between customer event and campaign trigger with batch ETL',
+    stat2Num: '25%', stat2Label: 'Order volume through quick commerce with zero customer identity data',
+    stat3Num: '<80ms', stat3Label: 'Event-to-trigger latency achieved with Kafka + PyFlink (production, 1M+ users)',
+    inactionSubtitle: 'Real-time behavioral triggers convert 3–5× better than batch campaigns. The infra to enable this is a one-time build.',
+    solTitle: 'Real-time unified pipeline:<br><span class="grad">Kafka → Flink → BigQuery</span> in 8 weeks.',
+    sol1Title: 'Universal Event Collector', sol1Desc: 'Kafka topics for every data source: Shopify webhooks, POS streams, app events, WhatsApp interactions — unified schema, real-time.',
+    sol2Title: 'Identity Stitching Engine', sol2Desc: 'PyFlink job that resolves customer identity across channels in <80ms. Phone number + email + device fingerprint = single customer view.',
+    sol3Title: 'Trigger Automation Layer', sol3Desc: 'Journey engine fires WhatsApp/email/push triggers the moment a behavioral condition is met — cart abandonment, browse interest, reorder window.',
+    solFooter: 'Runs on GCP/AWS. Auto-scales. You own the code and every event ever captured.',
+    priceBuild: '₹10–15L',
+    priceFeatures: ['Full pipeline build', 'Identity stitching', 'Journey trigger engine', 'Multi-source integration', 'Monitoring + alerting'],
+  },
+  rec: {
+    coverTitle: '₹4 Crore Hidden in Your<br>Browse Data. <span class="grad">Time to Unlock It.</span>',
+    coverSubtitle: 'A proposal to deploy a real-time personalization and recommendation engine that turns anonymous browsers into buyers — built on the same stack we used at Vue.ai for $10M revenue uplift.',
+    probTitle: '70% of your visitors leave without buying.<br>You have no idea <span class="accent2">why.</span>',
+    probAmount: '70% exit',
+    prob1Title: 'Your "also bought" section is a ₹0 upsell engine',
+    prob1Desc: 'Shopify\'s native recommendations are rule-based, not personalized. "Frequently bought together" ignores user context — size, price sensitivity, style preference, purchase history.',
+    prob2Title: 'You\'re showing the same 20 products to 100,000 different people',
+    prob2Desc: 'Homepage banners, bestseller lists, email campaigns — all static. The customer who bought premium kidswear sees the same banner as the one who bought ₹299 accessories.',
+    prob3Title: 'Browse data sits unactivated in your Shopify logs',
+    prob3Desc: 'Every product view, filter selection, wishlist add, and search query is a signal. You\'re collecting it and throwing it away. A recommendation engine turns it into revenue.',
+    stat1Num: '$10M', stat1Label: 'Revenue uplift from OTS recommendation engine built at Vue.ai',
+    stat2Num: '30%', stat2Label: 'YoY collection increase driven by personalization model',
+    stat3Num: '3–5×', stat3Label: 'Conversion uplift when homepage is personalized per user (industry avg)',
+    inactionSubtitle: 'Fashion brands running personalized recommendations see 3–5× homepage conversion. Static banners are leaving crores on the table.',
+    solTitle: 'Real-time Recommendation Engine<br>built on <span class="grad">your browse data.</span>',
+    sol1Title: 'Behavioral Signal Capture', sol1Desc: 'Real-time collection of every browse event, filter, search, wishlist, and cart action — streamed to a feature store for instant model serving.',
+    sol2Title: 'Personalized Homepage + PDP', sol2Desc: 'Each visitor sees a homepage personalized to their taste profile. Product pages surface "style matches" and "complete the look" — not generic bestsellers.',
+    sol3Title: 'Email & WhatsApp Re-engagement', sol3Desc: 'Automated triggers when a browsed product goes on sale, restocks, or matches a new arrival in their style — personalized at the individual level.',
+    solFooter: 'Same recommendation architecture that drove $10M revenue uplift at Vue.ai. Built for your catalog size, your data volume, your infra.',
+    priceBuild: '₹7–11L',
+    priceFeatures: ['Recommendation engine build', 'Shopify + PDP integration', 'Email/WhatsApp triggers', 'A/B testing framework', 'Revenue attribution dashboard'],
+  }
+};
+
+// ── Slide navigation ────────────────────────────────
+function goTo(n) {
+  const slides = document.querySelectorAll('.slide');
+  slides[current].classList.remove('active');
+  slides[current].classList.add('exit');
+  setTimeout(() => slides[current].classList.remove('exit'), 500);
+  current = Math.max(0, Math.min(n, TOTAL - 1));
+  slides[current].classList.add('active');
+  updateUI();
+}
+
+function nextSlide() { if (current < TOTAL - 1) goTo(current + 1); }
+function prevSlide() { if (current > 0) goTo(current - 1); }
+
+function updateUI() {
+  const pct = ((current + 1) / TOTAL) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('slideCount').textContent = `${current + 1} / ${TOTAL}`;
+  document.getElementById('slideLabel').textContent = `Slide ${current + 1} of ${TOTAL}`;
+}
+
+// ── Client selector ─────────────────────────────────
+function openSelector() {
+  document.getElementById('selector').classList.add('open');
+}
+
+function closeSelector() {
+  document.getElementById('selector').classList.remove('open');
+}
+
+function selectClient(el) {
+  document.querySelectorAll('.client-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  pendingClient = el.dataset.client;
+}
+
+function applyClient() {
+  selectedClient = pendingClient;
+  applyContent(clients[selectedClient]);
+  closeSelector();
+}
+
+function applyContent(c) {
+  function set(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+
+  set('cover-title', c.coverTitle);
+  set('cover-subtitle', c.coverSubtitle);
+  set('prob-title', c.probTitle);
+  set('prob1-title', c.prob1Title);
+  set('prob1-desc', c.prob1Desc);
+  set('prob2-title', c.prob2Title);
+  set('prob2-desc', c.prob2Desc);
+  set('prob3-title', c.prob3Title);
+  set('prob3-desc', c.prob3Desc);
+  set('stat1-num', c.stat1Num);
+  set('stat1-label', c.stat1Label);
+  set('stat2-num', c.stat2Num);
+  set('stat2-label', c.stat2Label);
+  set('stat3-num', c.stat3Num);
+  set('stat3-label', c.stat3Label);
+  set('inaction-subtitle', c.inactionSubtitle);
+  set('sol-title', c.solTitle);
+  set('sol1-title', c.sol1Title);
+  set('sol1-desc', c.sol1Desc);
+  set('sol2-title', c.sol2Title);
+  set('sol2-desc', c.sol2Desc);
+  set('sol3-title', c.sol3Title);
+  set('sol3-desc', c.sol3Desc);
+  set('sol-footer', c.solFooter);
+  set('price-build', c.priceBuild);
+  set('inaction-subtitle', c.inactionSubtitle);
+
+  // Price features
+  const pf = document.getElementById('price-features');
+  if (pf) pf.innerHTML = c.priceFeatures.map(f => `<li>${f}</li>`).join('');
+}
+
+// ── Keyboard navigation ─────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  else if (e.key === 'ArrowLeft') prevSlide();
+  else if (e.key === 'c' || e.key === 'C') openSelector();
+  else if (e.key === 'Escape') closeSelector();
+});
+
+// ── Init ────────────────────────────────────────────
+updateUI();
+</script>
+</body>
+</html>
