@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taksha — AI & Data Systems for Businesses That Can't Wait</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:    #FAFAF7;
+  --white:    #FFFFFF;
+  --ink:      #0D0D0B;
+  --ink-70:   #0D0D0Bb3;
+  --ink-40:   #0D0D0B66;
+  --ink-12:   #0D0D0B1f;
+  --saffron:  #D97706;
+  --saffron-light: #FEF3C7;
+  --saffron-mid:   #F59E0B;
+  --slate:    #1E3A5F;
+  --slate-light: #EFF6FF;
+  --green:    #065F46;
+  --green-light: #ECFDF5;
+  --red-light: #FEF2F2;
+  --red:      #991B1B;
+  --rule:     #E5E5E0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.10), 0 8px 20px rgba(0,0,0,0.06);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography ───────────────────────────────── */
+.display {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.display-sm {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--saffron);
+}
+
+/* ── Layout ───────────────────────────────────── */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.container-tight { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+
+section { padding: 100px 0; }
+section + section { border-top: 1px solid var(--rule); }
+
+/* ── Top Nav ──────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 40px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo .mark {
+  width: 28px; height: 28px;
+  background: var(--ink);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-70);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  background: var(--ink);
+  color: var(--cream) !important;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.nav-cta:hover { background: var(--saffron) !important; color: white !important; transform: translateY(-1px); }
+
+/* ── Client Segment Switcher ──────────────────── */
+.segment-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 40px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.segment-bar::-webkit-scrollbar { display: none; }
+
+.segment-tabs {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.seg-tab {
+  padding: 14px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-40);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.seg-tab:hover { color: var(--ink); }
+.seg-tab.active { color: var(--saffron); border-bottom-color: var(--saffron); font-weight: 600; }
+
+/* ── Hero Section ─────────────────────────────── */
+#hero {
+  padding: 120px 0 100px;
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--saffron);
+}
+
+.hero-body {
+  font-size: 17px;
+  color: var(--ink-70);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--saffron); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid var(--rule);
+  transition: border-color 0.2s, transform 0.15s;
+  cursor: pointer;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+/* Hero right: stat showcase */
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hero-stat-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.hero-stat-card:hover { box-shadow: var(--shadow-md); }
+
+.hero-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.hero-stat-card.amber::after { background: var(--saffron); }
+.hero-stat-card.slate::after { background: var(--slate); }
+.hero-stat-card.green::after { background: #059669; }
+.hero-stat-card.ink::after { background: var(--ink); }
+
+.hero-stat-card.span-2 { grid-column: span 2; }
+
+.stat-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.03em;
+}
+
+.stat-big.amber { color: var(--saffron); }
+.stat-big.slate { color: var(--slate); }
+.stat-big.green { color: #059669; }
+
+.stat-desc {
+  font-size: 12.5px;
+  color: var(--ink-70);
+  line-height: 1.5;
+}
+
+.stat-source {
+  font-size: 10px;
+  color: var(--ink-40);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Problem Section ──────────────────────────── */
+#problem { background: var(--white); }
+
+.section-header {
+  margin-bottom: 56px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.section-body {
+  font-size: 16px;
+  color: var(--ink-70);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.problem-card {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+}
+
+.problem-card .number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  font-weight: 300;
+  color: var(--ink-12);
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  user-select: none;
+}
+
+.problem-icon {
+  font-size: 24px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.problem-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.problem-card p {
+  font-size: 13.5px;
+  color: var(--ink-70);
+  line-height: 1.6;
+}
+
+.pain-callout {
+  margin-top: 40px;
+  background: var(--red-light);
+  border: 1px solid #FCA5A5;
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pain-callout .number-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pain-callout p {
+  font-size: 14px;
+  color: var(--red);
+  line-height: 1.5;
+}
+
+.pain-callout .cite {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ── Who We Are ───────────────────────────────── */
+#about { background: var(--cream); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-body {
+  font-size: 17px;
+  color: var(--ink-70);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+.about-body strong { color: var(--ink); font-weight: 600; }
+
+.about-body em {
+  font-style: italic;
+  color: var(--saffron);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15em;
+}
+
+.principle-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.principle-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--ink-70);
+  line-height: 1.5;
+}
+
+.principle-list li::before {
+  content: '—';
+  color: var(--saffron);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.about-credentials {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 36px 32px;
+  color: var(--cream);
+  position: sticky;
+  top: 80px;
+}
+
+.about-credentials h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+  opacity: 0.9;
+}
+
+.cred-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.cred-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.cred-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--saffron-mid);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 72px;
+  letter-spacing: -0.03em;
+}
+
+.cred-text {
+  font-size: 12.5px;
+  color: rgba(250,250,247,0.7);
+  line-height: 1.55;
+}
+
+.cred-text strong {
+  display: block;
+  color: var(--cream);
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+/* ── What We Build ────────────────────────────── */
+#solutions { background: var(--white); }
+
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.solution-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 16px;
+  padding: 32px 28px;
+  background: var(--cream);
+  transition: all 0.25s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.solution-card:hover {
+  border-color: var(--saffron);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.solution-card.featured {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+  grid-column: span 1;
+}
+
+.solution-card.featured:hover {
+  border-color: var(--saffron);
+}
+
+.sol-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--saffron-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.solution-card.featured .sol-icon {
+  background: rgba(255,255,255,0.1);
+}
+
+.solution-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.solution-card p {
+  font-size: 13.5px;
+  color: var(--ink-70);
+  line-height: 1.65;
+}
+
+.solution-card.featured p { color: rgba(250,250,247,0.7); }
+
+.sol-tag {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--saffron-light);
+}
+
+.solution-card.featured .sol-tag {
+  background: rgba(217,119,6,0.2);
+}
+
+.solutions-note {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--ink-40);
+  font-style: italic;
+}
+
+/* ── Case Studies / Proof ─────────────────────── */
+#proof { background: var(--cream); }
+
+.proof-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 28px 28px 28px 24px;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  transition: box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+
+.case-card.amber::before { background: var(--saffron); }
+.case-card.slate::before { background: var(--slate); }
+.case-card.green::before { background: #059669; }
+.case-card.ink::before { background: var(--ink); }
+
+.case-card:hover { box-shadow: var(--shadow-md); }
+
+.case-metric {
+  text-align: center;
+}
+
+.case-metric .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.case-metric .num.amber { color: var(--saffron); }
+.case-metric .num.slate { color: var(--slate); }
+.case-metric .num.green { color: #059669; }
+
+.case-metric .num-label {
+  font-size: 10px;
+  color: var(--ink-40);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.case-body h4 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.case-body p {
+  font-size: 13px;
+  color: var(--ink-70);
+  line-height: 1.55;
+}
+
+.case-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.case-badge.amber { background: var(--saffron-light); color: #92400E; }
+.case-badge.slate { background: var(--slate-light); color: var(--slate); }
+.case-badge.green { background: var(--green-light); color: var(--green); }
+
+/* ── FOMO / Why Now ───────────────────────────── */
+#fomo {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+#fomo .eyebrow { color: var(--saffron-mid); }
+
+.fomo-title {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  color: var(--cream);
+  margin-top: 12px;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+
+.fomo-body {
+  font-size: 16px;
+  color: rgba(250,250,247,0.6);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 56px;
+}
+
+.fomo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 56px;
+}
+
+.fomo-stat {
+  background: rgba(250,250,247,0.04);
+  padding: 36px 28px;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.fomo-stat:hover { background: rgba(250,250,247,0.08); }
+
+.fomo-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--saffron-mid);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.fomo-label {
+  font-size: 12.5px;
+  color: rgba(250,250,247,0.55);
+  line-height: 1.5;
+}
+
+.fomo-cite {
+  font-size: 10px;
+  color: rgba(250,250,247,0.3);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.fomo-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.fomo-col {
+  border-radius: 14px;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.fomo-col.bad { background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.2); }
+.fomo-col.good { background: rgba(5,150,105,0.08); border-color: rgba(5,150,105,0.2); }
+
+.fomo-col-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fomo-col.bad .fomo-col-title { color: #FCA5A5; }
+.fomo-col.good .fomo-col-title { color: #6EE7B7; }
+
+.fomo-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fomo-col ul li {
+  font-size: 13px;
+  color: rgba(250,250,247,0.6);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.fomo-col.bad ul li::before { content: '✗ '; color: #FCA5A5; position: absolute; left: 0; }
+.fomo-col.good ul li::before { content: '✓ '; color: #6EE7B7; position: absolute; left: 0; }
+
+/* ── Industries ───────────────────────────────── */
+#industries { background: var(--white); }
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.industry-card {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 24px 20px;
+  background: var(--cream);
+  transition: all 0.2s;
+}
+
+.industry-card:hover {
+  border-color: var(--saffron);
+  box-shadow: var(--shadow-sm);
+}
+
+.industry-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+
+.industry-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.industry-card p {
+  font-size: 12.5px;
+  color: var(--ink-40);
+  line-height: 1.5;
+}
+
+.industry-use {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--saffron);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Comparison ───────────────────────────────── */
+#compare { background: var(--cream); }
+
+.compare-wrapper {
+  margin-top: 48px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.compare-table th {
+  padding: 16px 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  text-align: left;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+}
+
+.compare-table th:not(:first-child) { text-align: center; }
+
+.compare-table td {
+  padding: 18px 24px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-70);
+}
+
+.compare-table td:not(:first-child) { text-align: center; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: var(--cream); }
+
+.compare-table tr.highlight td {
+  background: #FFFBEB;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.check { color: #059669; font-weight: 700; }
+.cross { color: #DC2626; }
+.partial { color: #D97706; }
+
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pill.red { background: var(--red-light); color: var(--red); }
+.pill.green { background: var(--green-light); color: var(--green); }
+.pill.amber { background: var(--saffron-light); color: #92400E; }
+
+/* ── Process ──────────────────────────────────── */
+#process { background: var(--white); }
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 56px;
+  position: relative;
+}
+
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: calc(12.5% + 20px);
+  right: calc(12.5% + 20px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--saffron), var(--slate));
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.process-dot {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--rule);
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s;
+}
+
+.process-step:hover .process-dot { border-color: var(--saffron); }
+
+.process-week {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  margin-bottom: 6px;
+}
+
+.process-step h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.process-step p {
+  font-size: 12.5px;
+  color: var(--ink-40);
+  line-height: 1.5;
+}
+
+.process-guarantee {
+  margin-top: 48px;
+  background: var(--saffron-light);
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.process-guarantee .icon { font-size: 28px; flex-shrink: 0; }
+.process-guarantee p { font-size: 14px; color: #92400E; line-height: 1.55; }
+.process-guarantee p strong { font-weight: 600; }
+
+/* ── Pricing ──────────────────────────────────── */
+#pricing { background: var(--cream); }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.pricing-card {
+  background: var(--white);
+  border: 1.5px solid var(--rule);
+  border-radius: 20px;
+  padding: 36px 30px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.pricing-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.pricing-card.featured {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.pricing-card.featured:hover { border-color: var(--saffron); }
+
+.popular-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--saffron);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pricing-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-bottom: 16px;
+}
+
+.pricing-card.featured .pricing-name { color: rgba(250,250,247,0.5); }
+
+.pricing-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.pricing-card.featured .pricing-amount { color: var(--cream); }
+.pricing-amount .currency { font-size: 1.5rem; vertical-align: super; }
+
+.pricing-cycle {
+  font-size: 12px;
+  color: var(--ink-40);
+  margin-bottom: 28px;
+}
+.pricing-card.featured .pricing-cycle { color: rgba(250,250,247,0.4); }
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.pricing-features li {
+  font-size: 13.5px;
+  color: var(--ink-70);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.pricing-card.featured .pricing-features li { color: rgba(250,250,247,0.75); }
+
+.pricing-features li::before {
+  content: '✓';
+  color: #059669;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pricing-card.featured .pricing-features li::before { color: var(--saffron-mid); }
+
+.pricing-cta {
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.pricing-cta:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+
+.pricing-card.featured .pricing-cta {
+  background: var(--saffron);
+  border-color: var(--saffron);
+  color: white;
+}
+
+.pricing-card.featured .pricing-cta:hover { background: #B45309; border-color: #B45309; }
+
+.pricing-note {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-40);
+  font-style: italic;
+}
+
+.roi-callout {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.roi-item {
+  background: var(--green-light);
+  border: 1px solid #A7F3D0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.roi-item .roi-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.roi-item .roi-label {
+  font-size: 12px;
+  color: var(--green);
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* ── CTA / Footer ─────────────────────────────── */
+#cta { background: var(--cream); padding: 80px 0; }
+
+.cta-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  background: var(--ink);
+  border-radius: 24px;
+  padding: 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-inner::before {
+  content: 'त';
+  font-family: serif;
+  font-size: 320px;
+  color: rgba(255,255,255,0.03);
+  position: absolute;
+  right: -40px;
+  top: -60px;
+  line-height: 1;
+  user-select: none;
+}
+
+.cta-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--cream);
+  margin: 12px 0 16px;
+}
+
+.cta-body {
+  font-size: 15px;
+  color: rgba(250,250,247,0.6);
+  line-height: 1.7;
+}
+
+.cta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cta-form input,
+.cta-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.cta-form input::placeholder,
+.cta-form textarea::placeholder {
+  color: rgba(250,250,247,0.3);
+}
+
+.cta-form input:focus,
+.cta-form textarea:focus {
+  border-color: var(--saffron);
+}
+
+.cta-form textarea { height: 90px; resize: none; }
+
+.cta-form .submit-btn {
+  background: var(--saffron);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.cta-form .submit-btn:hover { background: #B45309; }
+
+.cta-contact-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.cta-contact-links a {
+  font-size: 13px;
+  color: rgba(250,250,247,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cta-contact-links a:hover { color: var(--saffron-mid); }
+
+/* ── Footer ───────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.footer-tagline {
+  font-size: 12px;
+  color: var(--ink-40);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.footer-right {
+  font-size: 12px;
+  color: var(--ink-40);
+  text-align: right;
+}
+
+/* ── Scroll animations ────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Print styles ─────────────────────────────── */
+@media print {
+  nav, .segment-bar, .nav-cta { display: none !important; }
+  section { padding: 60px 0; page-break-inside: avoid; }
+  .hero-grid, .about-grid, .proof-intro, .fomo-compare { grid-template-columns: 1fr; gap: 32px; }
+  .fomo-grid { grid-template-columns: repeat(2, 1fr); }
+  #fomo { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-grid, .about-grid, .proof-intro, .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+  .solutions-grid, .problem-grid { grid-template-columns: repeat(2, 1fr); }
+  .fomo-grid, .industry-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-timeline { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .process-timeline::before { display: none; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .roi-callout { grid-template-columns: 1fr; }
+  .cta-inner { padding: 40px; }
+  .compare-table { font-size: 12px; }
+  .case-card { grid-template-columns: 60px 1fr; }
+  .case-badge { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Navigation ─────────────────────────────── -->
+<nav>
+  <div class="nav-logo">
+    <div class="mark">त</div>
+    Taksha
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">Who We Are</a></li>
+    <li><a href="#solutions">What We Build</a></li>
+    <li><a href="#proof">Proof</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#cta" class="nav-cta">Book Free Audit →</a></li>
+  </ul>
+</nav>
+
+<!-- ─── Client Segment Switcher ────────────────── -->
+<div class="segment-bar">
+  <div class="segment-tabs">
+    <div class="seg-tab active" data-client="privategpt" onclick="switchSegment(this)">🧠 Private GPT</div>
+    <div class="seg-tab" data-client="assistant" onclick="switchSegment(this)">🤖 AI Chatbot</div>
+    <div class="seg-tab" data-client="voice" onclick="switchSegment(this)">🎙️ Voice AI</div>
+    <div class="seg-tab" data-client="rto" onclick="switchSegment(this)">📦 RTO / Fraud</div>
+    <div class="seg-tab" data-client="rec" onclick="switchSegment(this)">🎯 Recommendation</div>
+    <div class="seg-tab" data-client="cdp" onclick="switchSegment(this)">📊 CDP / Pipeline</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left reveal">
+        <div class="hero-eyebrow eyebrow">Taksha · AI & Data Systems</div>
+        <h1 class="display hero-title" id="hero-title">
+          Your Business Runs on Knowledge.<br>Let AI <em>Answer the Questions.</em>
+        </h1>
+        <p class="hero-body" id="hero-body">
+          We build AI and data systems for businesses that don't have the time or team to build them in-house — from a Private GPT on your documents to voice agents that run sales calls to fraud models that cut logistics losses.
+        </p>
+        <div class="hero-actions">
+          <a href="#cta" class="btn-primary">Book Free 45-Min Audit →</a>
+          <a href="#proof" class="btn-secondary">See Proof</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; color: var(--ink-40);">
+          No retainer required for the audit. We deliver a working blueprint regardless.
+        </p>
+      </div>
+
+      <div class="hero-right reveal reveal-delay-2">
+        <div class="hero-stats">
+          <div class="hero-stat-card amber">
+            <div class="stat-big amber">2 wks</div>
+            <div class="stat-desc">Private GPT live on your documents — from kickoff to staff using it in production. No model training. No infra complexity.</div>
+            <div class="stat-source">Universal fit · Any industry · Any document type</div>
+          </div>
+          <div class="hero-stat-card green">
+            <div class="stat-big green">68%↓</div>
+            <div class="stat-desc">Lead acquisition cost reduction using AI voice agents vs. human tele-calling teams</div>
+            <div class="stat-source">500+ leads/week · &lt;80ms latency</div>
+          </div>
+          <div class="hero-stat-card slate">
+            <div class="stat-big slate">$10M</div>
+            <div class="stat-desc">Revenue uplift from recommendation engine built for fashion retail client — 30% YoY collection increase</div>
+            <div class="stat-source">Vue.ai · $250M+ GMV client</div>
+          </div>
+          <div class="hero-stat-card ink">
+            <div class="stat-big" style="color:var(--cream);">42%↓</div>
+            <div class="stat-desc" style="color:rgba(250,250,247,0.6);">Fraud reduction for a $250M+ logistics company within 3 months of ML model deployment</div>
+            <div class="stat-source" style="color:rgba(250,250,247,0.3);">ML fraud detection · Production</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROBLEM
+═══════════════════════════════════════════════ -->
+<section id="problem">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">The Problem</div>
+      <h2 class="display-sm section-title" id="prob-title">
+        Every business has knowledge locked<br>in documents nobody can <em style="font-style:italic; color:var(--saffron);">actually find.</em>
+      </h2>
+      <p class="section-body" id="prob-body">
+        SOPs stuck in PDFs. Sales scripts buried in email chains. Compliance docs that nobody reads. A Private GPT on your own documents answers these questions in seconds — and ships in 2 weeks.
+      </p>
+    </div>
+
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <span class="number">01</span>
+        <span class="problem-icon">📄</span>
+        <h3 id="prob1-title">Your team answers the same 20 questions every day</h3>
+        <p id="prob1-desc">Every business has a set of 20 internal questions that get answered manually — by a colleague, a Ctrl+F through a PDF, or a WhatsApp to the manager. That's 70% of your team's knowledge locked in silos. Source: Salesforce State of Data 2024.</p>
+      </div>
+      <div class="problem-card">
+        <span class="number">02</span>
+        <span class="problem-icon">🤖</span>
+        <h3 id="prob2-title">You know you need AI but can't build it in-house</h3>
+        <p id="prob2-desc">Every business owner has heard of ChatGPT. The gap isn't awareness — it's implementation. Nobody knows how to go from "this is impressive" to "a system that uses our own data to do something useful for our business."</p>
+      </div>
+      <div class="problem-card">
+        <span class="number">03</span>
+        <span class="problem-icon">⏳</span>
+        <h3 id="prob3-title">Hiring an AI engineer takes 6–9 months — minimum</h3>
+        <p id="prob3-desc">A senior AI engineer costs ₹40–70L/year and takes 6 months to onboard. By the time they ship anything, your competitors have already deployed. There's a faster path — we build it in 2 weeks.</p>
+      </div>
+    </div>
+
+    <div class="pain-callout reveal">
+      <div class="number-big" id="pain-number">70%</div>
+      <div>
+        <p id="pain-text">70% of business leaders say their most valuable insights are trapped inside inaccessible data silos — the same problem exists at document level. Knowledge exists; retrieval is manual and slow. A Private GPT changes this in 2 weeks. <em class="cite">Source: Salesforce State of Data & AI 2024.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHO WE ARE
+═══════════════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="eyebrow">Who We Are</div>
+        <h2 class="display-sm section-title">Taksha is not an agency.<br>We're the builder who ships<br>what your team <em>can't hire for.</em></h2>
+
+        <p class="about-body">
+          The name Taksha comes from Sanskrit — <strong>one who shapes raw material into something precise and lasting.</strong> We take whatever a business has — documents, data, workflows, customer interactions — and turn it into AI systems that deliver measurable output.
+        </p>
+        <p class="about-body">
+          We are a small, senior-only team. No juniors, no account managers, no project coordinators between you and the person building your system. When you talk to Taksha, you talk to the engineer who will write the code.
+        </p>
+        <p class="about-body">
+          We've built AI and data systems at production scale — Private GPTs on company knowledge bases, voice agents qualifying 500+ leads/week, recommendation engines driving $10M in revenue, real-time pipelines at 10M+ events/day. <strong>Not at consultancies. At companies, from the founding stage.</strong>
+        </p>
+
+        <ul class="principle-list">
+          <li>We build systems you own completely — no recurring dependency on us</li>
+          <li>Private GPT ships in 2 weeks. Full AI systems in 6–8 weeks.</li>
+          <li>We start every engagement with a free audit that has standalone value</li>
+          <li>We measure success by your business outcome, not our hours billed</li>
+        </ul>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="about-credentials">
+          <h3>What we've shipped.</h3>
+
+          <div class="cred-item">
+            <div class="cred-num">2 wks</div>
+            <div class="cred-text">
+              <strong>AI Knowledge Agent / Private GPT</strong>
+              RAG pipeline on company document store — SOPs, call transcripts, product catalogues, sales scripts. Staff and customers ask questions in plain language; system answers from verified company knowledge. Ships in 1–2 weeks.
+            </div>
+          </div>
+
+          <div class="cred-item">
+            <div class="cred-num">500+</div>
+            <div class="cred-text">
+              <strong>AI Voice Sales Engine</strong>
+              Hindi/English voice agent (Pipecat + Sarvam TTS) qualifying 500+ leads/week at 68% lower cost than human agents. &lt;80ms p95 latency. Live in production.
+            </div>
+          </div>
+
+          <div class="cred-item">
+            <div class="cred-num">$10M</div>
+            <div class="cred-text">
+              <strong>Recommendation Engine (Vue.ai)</strong>
+              OTS engine for a $250M+ fashion retail client. $10M revenue uplift, 30% YoY collection increase. ML-powered personalization at catalog scale.
+            </div>
+          </div>
+
+          <div class="cred-item">
+            <div class="cred-num">1M+</div>
+            <div class="cred-text">
+              <strong>Customer Data Platform at scale</strong>
+              PB-scale CDP for a Series B consumer platform. Replaced Mixpanel. Kafka → PyFlink → BigQuery pipeline, 10M+ events/day, &lt;10s schema-break recovery. $42K/year in SaaS savings.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOLUTIONS
+═══════════════════════════════════════════════ -->
+<section id="solutions">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">What We Build</div>
+      <h2 class="display-sm section-title">Six systems. Any business.<br>Ships in 2–12 weeks.</h2>
+      <p class="section-body">Each system is built to production-grade standards, runs on your infra, and is handed off with full source code — no ongoing dependency on us to keep it alive. Every engagement starts with a free audit.</p>
+    </div>
+
+    <div class="solutions-grid reveal">
+      <div class="solution-card featured">
+        <div class="sol-icon">🧠</div>
+        <h3>Private GPT / Knowledge Agent</h3>
+        <p>An AI assistant trained on your own documents — SOPs, manuals, HR policies, product catalogues, sales scripts, legal docs. Staff and customers ask questions in plain language; the system answers from your actual knowledge. Ships in 1–2 weeks.</p>
+        <span class="sol-tag">Ships in 2 weeks</span>
+      </div>
+
+      <div class="solution-card">
+        <div class="sol-icon">🤖</div>
+        <h3>Agentic Customer Chatbot</h3>
+        <p>AI chatbot on website, WhatsApp, or app that handles product discovery, FAQs, order status, support tickets, and upsell — with tool use and human escalation built in. Not a scripted bot. A reasoning agent.</p>
+        <span class="sol-tag">AI Assistant</span>
+      </div>
+
+      <div class="solution-card">
+        <div class="sol-icon">🎙️</div>
+        <h3>Voice AI Sales / Support Agent</h3>
+        <p>Outbound or inbound AI voice agent in Hindi and English. Lead qualification, reorder nudges, appointment reminders, COD confirmation, collections follow-up. CRM sync, human handoff. ₹18/call vs ₹65/human call.</p>
+        <span class="sol-tag">Voice AI</span>
+      </div>
+
+      <div class="solution-card">
+        <div class="sol-icon">📦</div>
+        <h3>COD Fraud & RTO Predictor</h3>
+        <p>ML risk scorer on COD orders — trained on behavioral signals, not just pincodes. Cuts RTO 30–40% with zero impact on legitimate buyers. Plugs into Shopify or OMS in &lt;100ms.</p>
+        <span class="sol-tag">ML / Fraud</span>
+      </div>
+
+      <div class="solution-card">
+        <div class="sol-icon">🎯</div>
+        <h3>Personalization & Recommendation</h3>
+        <p>Real-time browse signal capture → vector-based recommendation serving. Personalizes homepage, PDP, email, and WhatsApp at the individual level. Built on the architecture that drove $10M revenue uplift.</p>
+        <span class="sol-tag">ML / Rec</span>
+      </div>
+
+      <div class="solution-card">
+        <div class="sol-icon">📊</div>
+        <h3>CDP & Real-Time Data Pipeline</h3>
+        <p>Unified customer identity across all touchpoints — Shopify, WhatsApp, Meta, offline POS, quick-commerce. Kafka → Flink → BigQuery. Replaces Mixpanel + CleverTap + Segment at a fraction of the cost.</p>
+        <span class="sol-tag">CDP / Data Infra</span>
+      </div>
+    </div>
+
+    <p class="solutions-note">Not sure which system fits your stage? Start with the free 45-minute audit — we map your highest-ROI opportunity before you commit to anything.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROOF
+═══════════════════════════════════════════════ -->
+<section id="proof">
+  <div class="container">
+    <div class="proof-intro">
+      <div class="reveal">
+        <div class="eyebrow">Proof · Not Promises</div>
+        <h2 class="display-sm section-title">Results from production.<br>Not case studies from demos.</h2>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p style="font-size:15px; color:var(--ink-70); line-height:1.7;">
+          All figures below come from systems we built and operated at production scale. Client names are withheld under NDA, but the metrics are real — and auditable. We'll share more detail in a discovery call.
+        </p>
+      </div>
+    </div>
+
+    <div class="case-list reveal">
+      <div class="case-card amber">
+        <div class="case-metric">
+          <div class="num amber">$42K</div>
+          <div class="num-label">saved/year</div>
+        </div>
+        <div class="case-body">
+          <h4>Custom CDP replacing Mixpanel — Series B Consumer Platform</h4>
+          <p>Built a PB-scale customer data platform from scratch: Kafka event ingestion, PyFlink identity graph, BigQuery analytics layer. Replaced ₹35L/year of Mixpanel + CleverTap spend. 1M+ user profiles, 10M+ events/day. Schema breaks healed in &lt;10 seconds without data loss.</p>
+        </div>
+        <div class="case-badge amber">CDP</div>
+      </div>
+
+      <div class="case-card green">
+        <div class="case-metric">
+          <div class="num green">68%↓</div>
+          <div class="num-label">cost/lead</div>
+        </div>
+        <div class="case-body">
+          <h4>AI Voice Sales Engine — Consumer Platform, Outbound Sales</h4>
+          <p>Built Hindi/English AI voice agent using Pipecat + Sarvam TTS for outbound lead qualification. Replaced 7 of 10 tele-callers at 68% lower cost per qualified lead. Call latency &lt;80ms p95. CRM sync, call recording, human handoff for high-intent conversations. 500+ leads/week in production.</p>
+        </div>
+        <div class="case-badge green">Voice AI</div>
+      </div>
+
+      <div class="case-card slate">
+        <div class="case-metric">
+          <div class="num slate">$10M</div>
+          <div class="num-label">rev uplift</div>
+        </div>
+        <div class="case-body">
+          <h4>Recommendation Engine — Fashion Retail ($250M+ GMV)</h4>
+          <p>Built an online-to-store (OTS) recommendation engine for a large fashion retail client at Vue.ai. Real-time browse signal capture, vector similarity serving, personalized product feeds across email and in-store kiosks. $10M revenue uplift measured over one season; 30% YoY collection increase. (Vue.ai, 2023–24)</p>
+        </div>
+        <div class="case-badge slate">Rec Engine</div>
+      </div>
+
+      <div class="case-card ink">
+        <div class="case-metric">
+          <div class="num" style="color:var(--ink);">42%↓</div>
+          <div class="num-label">fraud rate</div>
+        </div>
+        <div class="case-body">
+          <h4>Fraud Detection ML — $250M Logistics Client</h4>
+          <p>Built and deployed a real-time fraud detection model for a major Indian logistics client. Feature engineering on delivery patterns, address signals, and payment behavior. 42% fraud reduction within 3 months of deployment. Zero false-positive complaints from genuine customers. (Vue.ai, 2023)</p>
+        </div>
+        <div class="case-badge" style="background:var(--cream);color:var(--ink-70);">ML / Fraud</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOMO / WHY NOW
+═══════════════════════════════════════════════ -->
+<section id="fomo">
+  <div class="container">
+    <div class="eyebrow">Why Now</div>
+    <h2 class="display fomo-title">AI capability crossed the threshold.<br>The window is <em style="font-style:italic; color:var(--saffron);">right now.</em></h2>
+    <p class="fomo-body">
+      GPT-4o, Claude, Gemini — LLMs are now reliable enough to run business-critical workflows. Voice AI latency is under 80ms. RAG pipelines are production-stable. The tools exist. Most businesses just lack the builder.
+    </p>
+
+    <div class="fomo-grid reveal">
+      <div class="fomo-stat">
+        <div class="fomo-num">70%</div>
+        <div class="fomo-label">of business leaders say their most valuable insights are trapped in inaccessible silos — the Private GPT problem at document level</div>
+        <div class="fomo-cite">Source: Salesforce State of Data & AI 2024</div>
+      </div>
+      <div class="fomo-stat">
+        <div class="fomo-num">251%</div>
+        <div class="fomo-label">ROI from AI chatbot deployment — customers 27% more likely to purchase after an AI interaction vs. no interaction</div>
+        <div class="fomo-cite">Source: Forrester TEI Study, Bloomreach 2024</div>
+      </div>
+      <div class="fomo-stat">
+        <div class="fomo-num">75%</div>
+        <div class="fomo-label">Customer call cost reduction achieved by Meesho using GenAI voice agents in 2024 — the tech is proven at massive scale</div>
+        <div class="fomo-cite">Source: TechCrunch, November 2024</div>
+      </div>
+      <div class="fomo-stat">
+        <div class="fomo-num">49%</div>
+        <div class="fomo-label">COD RTO rate in India vs 3.1% prepaid — a 30× gap that an ML fraud model closes surgically for D2C brands</div>
+        <div class="fomo-cite">Source: Unicommerce India D2C Report 2026</div>
+      </div>
+    </div>
+
+    <div class="fomo-compare reveal">
+      <div class="fomo-col bad">
+        <div class="fomo-col-title">✗ Waiting another 6 months means:</div>
+        <ul>
+          <li>Employees still answering the same 20 questions manually every day</li>
+          <li>Competitors deploying AI assistants while your support team burns out</li>
+          <li>Another 6 months of tele-callers at 12% connect rate and ₹65/call</li>
+          <li>RTO losses compounding — unrecovered COD waste every month</li>
+          <li>AI engineer hiring cycle that starts in month 7, ships in month 13</li>
+        </ul>
+      </div>
+      <div class="fomo-col good">
+        <div class="fomo-col-title">✓ Starting now means:</div>
+        <ul>
+          <li>Private GPT live in 2 weeks — your documents answering questions 24/7</li>
+          <li>AI chatbot deflecting 60–86% of support tickets by month 2</li>
+          <li>Voice agent qualifying leads at ₹18/call by month 6</li>
+          <li>RTO predictor cutting returns 30–40% — ₹3–5L/month recovered</li>
+          <li>12-month head start on every competitor that waits</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     INDUSTRIES
+═══════════════════════════════════════════════ -->
+<section id="industries">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Industries We Serve</div>
+      <h2 class="display-sm section-title">Any industry with documents,<br>customers, or a tele-calling team.</h2>
+      <p class="section-body">The Private GPT and AI Chatbot products open the target market to any industry. The fraud, pipeline, and recommendation products are D2C/ecommerce-specific. Every business qualifies for at least one.</p>
+    </div>
+
+    <div class="industry-grid reveal">
+      <div class="industry-card">
+        <span class="industry-icon">⚖️</span>
+        <h4>Law Firms / Legal</h4>
+        <p>Contract clause search, precedent retrieval, client Q&amp;A bot on case files and compliance docs</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🧾</span>
+        <h4>CA / Accounting Firms</h4>
+        <p>Tax code lookup, client onboarding bot, compliance Q&amp;A — staff answers in seconds, not hours</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏥</span>
+        <h4>Hospitals / Clinics</h4>
+        <p>Patient intake bot, discharge instruction chatbot, symptom triage, internal SOP search for staff</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏗️</span>
+        <h4>Real Estate</h4>
+        <p>Property search agent, lease Q&amp;A bot, broker knowledge base — instantly searchable listings and legal terms</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏭</span>
+        <h4>Manufacturing</h4>
+        <p>SOPs on demand, machine manual Q&amp;A, quality checklist agent, supplier compliance search</p>
+        <div class="industry-use">Private GPT · Voice AI</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🚛</span>
+        <h4>Logistics / Supply Chain</h4>
+        <p>Shipment tracking bot, driver SOP assistant, customs document Q&amp;A, route compliance agent</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏦</span>
+        <h4>Financial Services / NBFC</h4>
+        <p>Loan eligibility bot, collection follow-up voice agent, KYC Q&amp;A, policy compliance search</p>
+        <div class="industry-use">Voice AI · Private GPT</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">👗</span>
+        <h4>D2C Fashion & Apparel</h4>
+        <p>COD RTO prediction, browse personalization, recommendation engine, influencer attribution</p>
+        <div class="industry-use">RTO · Rec Engine · CDP</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">💄</span>
+        <h4>Beauty & D2C Brands</h4>
+        <p>Subscription reorder voice AI, AI chatbot on WhatsApp, customer data platform, SKU ML</p>
+        <div class="industry-use">Voice AI · AI Chatbot · CDP</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏫</span>
+        <h4>Schools / EdTech</h4>
+        <p>Admission chatbot, curriculum Q&amp;A, parent communication bot, staff policy search</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🍕</span>
+        <h4>QSR & Food Delivery</h4>
+        <p>Order reorder nudge AI, customer support chatbot, delivery ops SOP assistant</p>
+        <div class="industry-use">AI Chatbot · Voice AI</div>
+      </div>
+      <div class="industry-card">
+        <span class="industry-icon">🏢</span>
+        <h4>Consulting / Professional Services</h4>
+        <p>Proposal assistant, methodology knowledge base, client brief bot, engagement docs search</p>
+        <div class="industry-use">Private GPT · AI Chatbot</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     COMPARISON
+═══════════════════════════════════════════════ -->
+<section id="compare">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Why Not Just Buy a Tool?</div>
+      <h2 class="display-sm section-title">The honest comparison<br>nobody selling SaaS will show you.</h2>
+    </div>
+
+    <div class="compare-wrapper reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Cost</th>
+            <th>You Own It</th>
+            <th>Customization</th>
+            <th>Lock-in</th>
+            <th>Speed to Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Generic AI tools (ChatGPT, Copilot)</strong><br><span style="font-size:12px;color:var(--ink-40);">No company data, no customization</span></td>
+            <td><span class="pill amber">₹3–20K/yr</span></td>
+            <td class="cross">✗ Vendor owns</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ High</td>
+            <td class="partial">⚡ Instant (generic)</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise AI vendors (Salesforce AI, SAP)</strong><br><span style="font-size:12px;color:var(--ink-40);">Built for large enterprises, wrong price point</span></td>
+            <td><span class="pill red">₹50L+/yr</span></td>
+            <td class="cross">✗ Vendor owns</td>
+            <td class="partial">~ Limited</td>
+            <td class="cross">✗ Very high</td>
+            <td class="partial">~ 6–18 months</td>
+          </tr>
+          <tr>
+            <td><strong>Hire an AI Engineer in-house</strong><br><span style="font-size:12px;color:var(--ink-40);">₹40–70L/yr, 6–9 months to onboard</span></td>
+            <td><span class="pill amber">₹40–70L</span></td>
+            <td class="check">✓ You own</td>
+            <td class="check">✓ Full</td>
+            <td class="check">✓ None</td>
+            <td class="cross">✗ 9–12 months</td>
+          </tr>
+          <tr>
+            <td><strong>Agency / Offshore Dev Team</strong><br><span style="font-size:12px;color:var(--ink-40);">Fixed-bid, juniors billing senior rates</span></td>
+            <td><span class="pill amber">₹5–20L</span></td>
+            <td class="partial">~ Depends</td>
+            <td class="partial">~ Depends</td>
+            <td class="cross">✗ High</td>
+            <td class="cross">✗ 4–6 months</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>✦ Taksha Custom Build</strong><br><span style="font-size:12px;color:var(--ink-40);">Senior-only, founding-team speed</span></td>
+            <td><span class="pill green">₹1–15L</span></td>
+            <td class="check">✓ You own 100%</td>
+            <td class="check">✓ Full</td>
+            <td class="check">✓ None</td>
+            <td class="check">✓ 2–8 weeks</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:20px; font-size:13px; color:var(--ink-40); text-align:center; font-style:italic;">
+      Pricing: Private GPT ₹1–3L build · AI Chatbot ₹3–6L · Voice AI ₹5–8L · RTO ML ₹4–7L · Recommendation ₹7–11L · CDP ₹8–15L. All include 30-day support and full code handoff.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROCESS
+═══════════════════════════════════════════════ -->
+<section id="process">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">How We Work</div>
+      <h2 class="display-sm section-title">Private GPT in 2 weeks.<br>Full AI systems in 8. No exceptions.</h2>
+      <p class="section-body">We've run this process enough times to know where it breaks — and we've built the methodology to prevent it. The timeline below is the contract. Not a roadmap.</p>
+    </div>
+
+    <div class="process-timeline reveal">
+      <div class="process-step">
+        <div class="process-dot">🔍</div>
+        <div class="process-week">Day 0 · Free</div>
+        <h4>45-Minute Audit</h4>
+        <p>We review your documents, stack, and team. Map your highest-ROI AI opportunity. Deliver a working architecture blueprint — standalone value regardless of whether you proceed.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-dot">⚙️</div>
+        <div class="process-week">Week 1–2</div>
+        <h4>Build & Connect</h4>
+        <p>For Private GPT and AI chatbots: ingestion pipeline, embeddings, RAG setup, UI/API. For complex systems (Voice AI, ML, CDP): infra provisioned on your account, first integration live.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-dot">🧪</div>
+        <div class="process-week">Week 3–6</div>
+        <h4>Tune & Integrate</h4>
+        <p>Quality tuning, prompt engineering, CRM/Shopify/WhatsApp integrations. Analytics dashboard. Tested on your real data — not synthetic demos.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-dot">🚀</div>
+        <div class="process-week">Week 7–8</div>
+        <h4>Harden + Handoff</h4>
+        <p>Load testing, runbook documentation, team training. 30-day post-launch support included. Then it's yours — completely.</p>
+      </div>
+    </div>
+
+    <div class="process-guarantee reveal">
+      <span class="icon">🛡️</span>
+      <p><strong>Our commitment:</strong> If we don't deliver a working system within the agreed timeline, the final 20% payment is waived. We've shipped on time in every engagement. The guarantee exists because we mean it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PRICING
+═══════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Investment</div>
+      <h2 class="display-sm section-title">Transparent pricing.<br>No retainer surprises.</h2>
+      <p class="section-body">All prices are for complete, production-ready systems. You own 100% of the code and infra. Payment milestones: 40% kickoff, 40% midpoint, 20% go-live.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-name">Start Here</div>
+        <div class="pricing-amount"><span class="currency">₹</span>50K</div>
+        <div class="pricing-cycle">one-time · delivered in 2 weeks</div>
+        <ul class="pricing-features">
+          <li>Full data source and stack audit</li>
+          <li>Architecture blueprint for your highest-ROI system</li>
+          <li>ROI model with break-even timeline</li>
+          <li>No obligation — useful standalone</li>
+          <li>Credited against build fee if you proceed</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Book Free Audit</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="popular-badge">Most Impactful</div>
+        <div class="pricing-name">Build + Deploy</div>
+        <div class="pricing-amount"><span class="currency">₹</span><span id="price-amount">1–15L</span></div>
+        <div class="pricing-cycle" id="price-cycle">one-time · 2–8 weeks to production</div>
+        <ul class="pricing-features" id="price-features-list">
+          <li>Private GPT from ₹1L · AI Chatbot from ₹3L</li>
+          <li>Voice AI from ₹5L · RTO/Fraud ML from ₹4L</li>
+          <li>Rec Engine from ₹7L · CDP from ₹8L</li>
+          <li>Runs on your infra — no vendor dependency</li>
+          <li>Full documentation, runbooks, team training</li>
+          <li>30-day post-launch support window included</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Start the Conversation →</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-name">Retain + Evolve</div>
+        <div class="pricing-amount"><span class="currency">₹</span>1.5L</div>
+        <div class="pricing-cycle">per month · ongoing</div>
+        <ul class="pricing-features">
+          <li>Feature additions and model retraining</li>
+          <li>Performance monitoring and alerting</li>
+          <li>Priority async engineering support</li>
+          <li>Quarterly system health review</li>
+          <li>Less than 1 junior engineer's salary</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Talk to Us</button>
+      </div>
+    </div>
+
+    <div class="roi-callout reveal">
+      <div class="roi-item">
+        <div class="roi-num">2 wks</div>
+        <div class="roi-label">Private GPT live on your documents — staff questions answered in seconds, not hours</div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-num">₹3–5L</div>
+        <div class="roi-label">Monthly RTO savings for a D2C brand doing 5K+ COD orders with our fraud ML model</div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-num">251%</div>
+        <div class="roi-label">ROI from AI chatbot deployment — Forrester TEI Study, Bloomreach 2024</div>
+      </div>
+    </div>
+
+    <p class="pricing-note">Prices vary by scope and complexity. The audit will give you an exact quote before any commitment.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════════ -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div>
+        <div class="eyebrow" style="color: var(--saffron-mid);">Book a Free Audit</div>
+        <h2 class="display cta-title">45 minutes.<br>A blueprint you keep.</h2>
+        <p class="cta-body">
+          We'll review your current data stack, map your highest-ROI opportunity, and give you a working architecture blueprint — regardless of whether we work together. No pitch. No pressure.
+        </p>
+        <div class="cta-contact-links">
+          <a href="mailto:nikhil.kumar707128@gmail.com">📩 nikhil.kumar707128@gmail.com</a>
+          <a href="tel:+919523120037">📞 +91 95231 20037</a>
+          <a href="https://linkedin.com/in/nikhill-kumarr" target="_blank">🔗 LinkedIn</a>
+          <a href="#">📍 Bangalore, India</a>
+        </div>
+      </div>
+      <div>
+        <div class="cta-form">
+          <input type="text" placeholder="Your name" />
+          <input type="text" placeholder="Company name & industry (e.g. Law firm, D2C brand, Hospital)" />
+          <input type="email" placeholder="Work email" />
+          <textarea placeholder="What's your biggest data or AI challenge right now? (optional)"></textarea>
+          <button class="submit-btn" onclick="alert('Thank you — Nikhil will be in touch within 24 hours.')">
+            Request Free Audit →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ──────────────────────────────────── -->
+<footer>
+  <div>
+    <div class="footer-logo">Taksha</div>
+    <div class="footer-tagline">We shape raw data into lasting advantage.</div>
+  </div>
+  <div class="footer-right">
+    <div>© 2026 Taksha. All rights reserved.</div>
+    <div style="margin-top:4px;">Bangalore, India · hello@taksha.in</div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+/* ── Segment switcher ─────────────────────────── */
+const segmentData = {
+  privategpt: {
+    heroTitle: 'Your Business Runs on Knowledge.<br>Let AI <em>Answer the Questions.</em>',
+    heroBody: 'We build Private GPT systems trained on your own documents — SOPs, manuals, HR policies, product catalogues, sales scripts, legal docs. Staff and customers ask questions in plain language. The system answers from your actual knowledge. Ships in 2 weeks.',
+    probTitle: 'Every business has knowledge locked<br>in documents nobody can <em style="font-style:italic;color:var(--saffron)">actually find.</em>',
+    probBody: 'SOPs stuck in PDFs. Sales scripts buried in email chains. Compliance docs answered manually. A Private GPT on your own documents answers these questions in seconds — not by searching Google, but from your own verified knowledge.',
+    prob1Title: 'Your team answers the same 20 questions every day',
+    prob1Desc: '70% of business leaders say their most valuable insights are trapped in inaccessible silos. At document level: knowledge exists, retrieval is manual. Every time a new employee asks a veteran "how do I…", that\'s a Private GPT moment. Source: Salesforce State of Data 2024.',
+    prob2Title: 'New hires take 3–6 months to get productive',
+    prob2Desc: 'Most of that ramp time is spent learning institutional knowledge that already exists in documents. A Private GPT on your manuals, wikis, SOPs, and case files cuts this to days — not months.',
+    prob3Title: 'ChatGPT hallucinates. Your own GPT doesn\'t.',
+    prob3Desc: 'Generic AI tools make things up. A Private GPT built on your documents answers only from what you\'ve approved — with source citations. Wrong answers are eliminated by design, not by prompt engineering.',
+    painNumber: '70%',
+    painText: '70% of business leaders say their most valuable insights are trapped inside inaccessible silos — the same problem at document level. Knowledge exists; retrieval is manual. A Private GPT changes this in 2 weeks. <em class="cite">Source: Salesforce State of Data & AI 2024.</em>',
+    priceAmount: '1–3L', priceCycle: 'one-time · 1–2 weeks to live',
+    priceFeatures: ['RAG pipeline on your document store (PDF, Drive, Notion, Confluence)','GPT-4o / Claude — no model training needed','Web UI, WhatsApp, or API integration','Source citations on every answer','Admin dashboard — add/update documents anytime','30-day post-launch support. Code is 100% yours.']
+  },
+  cdp: {
+    heroTitle: 'Your Data Is Worth<br><em>10× More</em> Than<br>You\'re Extracting.',
+    heroBody: 'We build production-grade Customer Data Platforms that replace CleverTap + Mixpanel + Segment — at a fraction of the cost, and you own everything.',
+    probTitle: 'Growing brands are paying ₹15–25L/year<br>for tools that give them <em style="font-style:italic;color:var(--saffron)">the illusion</em> of data.',
+    probBody: 'CleverTap. Mixpanel. Segment. MoEngage. Each tool promises the answer — but none talk to each other, none give you a single customer truth, and all of them own your data.',
+    prob1Title: 'The triple-spend trap',
+    prob1Desc: 'Most brands at Series A–C pay separately for product analytics, engagement automation, and CRM — often ₹15–25L/year with zero unified customer identity across all three.',
+    prob2Title: 'You can\'t answer the CEO question',
+    prob2Desc: '"What is our LTV by acquisition channel?" No brand we\'ve audited can answer this in under 10 minutes. Yet this single number drives every growth decision.',
+    prob3Title: 'Hiring a data team takes 12+ months',
+    prob3Desc: 'A senior data engineer costs ₹35–50L/year and takes 6 months to onboard. A VP of Data costs ₹80L+. You pay that for 12 months before seeing production output.',
+    painNumber: '₹25L', painText: 'The average Indian D2C brand at Series B spends ₹15–25L/year on analytics SaaS — for a customer profile still fragmented across 3–5 tools. <em class="cite">Source: CleverTap/MoEngage enterprise pricing, Mixpanel paid tiers, 2024–25.</em>',
+    priceAmount: '8–12L', priceCycle: 'one-time · 6–8 weeks to production',
+    priceFeatures: ['Full CDP build — identity graph, pipeline, analytics','Replaces Mixpanel + CleverTap + Segment','Kafka → Flink → BigQuery on your infra','Unified customer profile across all touchpoints','LTV, cohort, and churn analytics dashboards','30-day post-launch support. Code is 100% yours.']
+  },
+  voice: {
+    heroTitle: 'Replace 7 of 10 Tele-Callers<br>with an AI that <em>Never Sleeps.</em>',
+    heroBody: 'We build production-grade Hindi/English AI voice agents for outbound sales, reorder nudges, and lead qualification — delivered and running in 6 weeks at ₹2/call.',
+    probTitle: 'Your tele-calling team costs ₹25–40L/year<br>and <em style="font-style:italic;color:var(--saffron)">connects 12%</em> of the numbers it dials.',
+    probBody: 'Manual outbound dialing is expensive, inconsistent, and increasingly ineffective. AI voice closes that gap at a fraction of the cost — with proven production results.',
+    prob1Title: 'Manual dialing: 8–15% connect rate',
+    prob1Desc: 'A tele-caller makes 80–120 dials/day and reaches 10–15 customers. An AI agent dials 500+ numbers/day with smart time-window scheduling — 35–55% connect rate.',
+    prob2Title: 'Each agent costs ₹25–35K/month + overhead',
+    prob2Desc: 'A team of 10 agents costs ₹30–40L/year in salaries. AI voice delivers the same output for ₹50–80K/month in infra — 80% cost reduction with better consistency.',
+    prob3Title: 'Quality is inconsistent. Agents have bad days.',
+    prob3Desc: 'Script compliance drops after lunch. Objection handling varies by agent. An AI delivers the same quality at 9 AM and 9 PM, seven days a week.',
+    painNumber: '₹40L', painText: 'A 10-person outbound tele-calling team costs ₹30–40L/year all-in. Meesho cut customer call costs by 75% with GenAI voice agents in 2024 — the tech is proven at massive scale. <em class="cite">Source: TechCrunch, November 2024.</em>',
+    priceAmount: '5–8L', priceCycle: 'one-time · 6 weeks to production',
+    priceFeatures: ['Hindi + English AI voice agent build','Pipecat + Sarvam TTS — <80ms latency','CRM sync (Leadsquared / Zoho / custom)','Call recording, transcripts, sentiment analysis','Human handoff for high-intent conversations','30-day tuning period. Code is 100% yours.']
+  },
+  rto: {
+    heroTitle: 'Stop Losing ₹40L/Month<br>to COD Returns You <em>Could Predict.</em>',
+    heroBody: 'We build ML-powered RTO risk scorers that cut return-to-origin rates 30–40% — with zero friction for legitimate buyers and zero manual pincode management.',
+    probTitle: 'COD RTO is costing you ₹9–12L/month<br>in <em style="font-style:italic;color:var(--saffron)">pure logistics waste.</em>',
+    probBody: 'Fashion and home décor COD RTO rates hit 40–50% nationally. At ₹180–240 per failed delivery, that\'s crores in annual losses that an ML model can surgically prevent.',
+    prob1Title: '26% of COD orders fail nationally',
+    prob1Desc: 'Fashion and home décor RTO rates hit 40–50%. At ₹180–240 per failed delivery and 5,000 COD orders/month, you\'re burning ₹9–12L/month in logistics every month. Source: Shipway 2024.',
+    prob2Title: 'Manual pincode blacklisting misses 60% of bad actors',
+    prob2Desc: 'RTO is driven by customer behavior patterns — phone history, order frequency, time-of-day, price sensitivity — not just geography. Rule-based blacklisting is too blunt.',
+    prob3Title: 'Blocking COD by pincode loses genuine customers',
+    prob3Desc: 'Manual blocks punish the 90%+ of legitimate buyers in affected areas. A surgical ML model blocks the 8% of bad actors while genuine buyers go through seamlessly.',
+    painNumber: '₹12L', painText: 'At 5,000 COD orders/month with a 26% failure rate and ₹200 average RTO cost: ₹26L/month in revenue unearned, ₹12L/month in logistics waste. Our model targets 30–40% of that recoverable. <em class="cite">Source: Shipway ShipNotes, Dazeinfo 2024.</em>',
+    priceAmount: '4–7L', priceCycle: 'one-time · 6 weeks to production',
+    priceFeatures: ['RTO prediction ML model (30–40% reduction)','Behavioral signal feature engineering','Shopify / OMS integration — <100ms decision','OTP verification flow for high-risk orders','Dashboard with RTO savings attribution','3-month model tuning window. Code is 100% yours.']
+  },
+  assistant: {
+    heroTitle: 'An AI That Converts<br>Browsers into Buyers — <em>24/7.</em>',
+    heroBody: 'We build personalized conversational AI assistants for product discovery, customer support, and upsell — across your website, app, and WhatsApp. Live in 6 weeks.',
+    probTitle: 'Support tickets cost ₹180–350 each.<br>AI resolves <em style="font-style:italic;color:var(--saffron)">70% of them instantly.</em>',
+    probBody: 'High-intent customers are leaving because they can\'t find what they want. Support agents answer the same 20 questions all day. An AI solves both — at ₹2/conversation.',
+    prob1Title: '65% of visitors abandon without converting',
+    prob1Desc: 'Search bars don\'t understand intent. "Blue kurti for wedding" should return personalized results by size, budget, and occasion — not keyword matches. Most D2C search is a dead end.',
+    prob2Title: 'Support handles the same 20 questions all day',
+    prob2Desc: '"Where\'s my order?", "What\'s the return policy?", "Do you have XL?" — each costs ₹180–350 in agent time. An AI handles these at ₹2/conversation with instant resolution.',
+    prob3Title: 'No upsell at the moment of highest intent',
+    prob3Desc: 'When a customer asks about a product, that\'s peak intent. A trained AI surfaces the right cross-sell, urgency signal, or alternative — your static PDP cannot.',
+    painNumber: '₹350', painText: 'The average cost per support ticket (agent salary + overhead + tooling) at a Series A–B brand is ₹180–350. A brand resolving 2,000 tickets/month spends ₹36–70L/year on support alone. 70% of those tickets are automatable. <em class="cite">Source: Freshdesk/Intercom benchmark reports, 2024.</em>',
+    priceAmount: '6–10L', priceCycle: 'one-time · 6–8 weeks to production',
+    priceFeatures: ['Full AI assistant build (web + WhatsApp)','Semantic product catalog search (vector)','Support ticket deflection — 70%+ automation','Personalized upsell and cross-sell layer','Analytics: deflection rate, conversion, CSAT','30-day tuning period. Code is 100% yours.']
+  },
+  pipeline: {
+    heroTitle: 'Your 3 Data Sources<br>Are <em>Talking Past Each Other.</em>',
+    heroBody: 'We build real-time event pipelines that unify your online, offline, and quick-commerce data — enabling behavioral triggers in <80ms instead of batch jobs at 2 AM.',
+    probTitle: 'Shopify, offline POS, and Blinkit data<br>are in <em style="font-style:italic;color:var(--saffron)">3 silos</em> with no real-time bridge.',
+    probBody: 'You\'re retargeting people who already bought. You\'re missing in-store browsers who left. Your cart abandon email goes out 8 hours after the intent has cooled. This is fixable.',
+    prob1Title: 'Customer browsed in-store, bought online — you don\'t know',
+    prob1Desc: 'Offline POS and Shopify don\'t share identity. You\'re running retargeting campaigns against people who already converted in-store. And missing the ones who didn\'t.',
+    prob2Title: '"Real-time" campaigns run on yesterday\'s batch',
+    prob2Desc: 'ETL at 2 AM means your cart abandonment trigger fires 8 hours after the customer left — they\'ve already bought elsewhere or lost the intent entirely.',
+    prob3Title: 'Quick commerce is a black box',
+    prob3Desc: 'Blinkit and Zepto give you SKUs sold, not customer identity. 15–25% of your order volume has zero behavioral intelligence attached. You can\'t activate what you can\'t see.',
+    painNumber: '8 hrs', painText: 'The average delay between a customer behavioral event (cart abandon, browse exit) and the corresponding campaign trigger in batch-ETL architectures is 6–12 hours. Real-time trigger campaigns convert 3–5× better than batch. <em class="cite">Source: Klaviyo, MoEngage benchmark reports, 2024.</em>',
+    priceAmount: '10–15L', priceCycle: 'one-time · 8 weeks to production',
+    priceFeatures: ['Universal Kafka event collector (all sources)','Real-time PyFlink identity stitching engine','Journey trigger automation layer','Multi-source integration: Shopify, POS, app','Monitoring, alerting, and data quality layer','30-day post-launch support. Code is 100% yours.']
+  },
+  rec: {
+    heroTitle: '₹4 Crore Hidden in Your<br>Browse Data. <em>Time to Unlock It.</em>',
+    heroBody: 'We build real-time personalization and recommendation engines that turn anonymous browse signals into personalized product feeds — on the same architecture that drove $10M revenue uplift.',
+    probTitle: '70% of your visitors leave without buying.<br>You have <em style="font-style:italic;color:var(--saffron)">no idea why.</em>',
+    probBody: 'Every browse, filter, wishlist add, and search query is a signal. You\'re collecting it and throwing it away. A recommendation engine turns it into measurable revenue.',
+    prob1Title: '"Also bought" is a ₹0 upsell engine',
+    prob1Desc: 'Shopify\'s native recommendations are rule-based, not personalized. "Frequently bought together" ignores user context — size, price sensitivity, style preference, purchase history.',
+    prob2Title: 'Same 20 products shown to 100,000 different people',
+    prob2Desc: 'Homepage banners, bestseller lists, email campaigns — all static. The premium buyer sees the same banner as the ₹299 accessory buyer. Personalization is margin.',
+    prob3Title: 'Browse data sitting in Shopify logs, unactivated',
+    prob3Desc: 'Every product view, filter selection, and search query is a signal you\'re collecting and discarding. A recommendation engine converts it into revenue at zero additional CAC.',
+    painNumber: '$10M', painText: '$10M revenue uplift from a recommendation engine we built at Vue.ai for a $250M+ fashion retail client. 30% YoY collection increase. The architecture is proven — we adapt it to your catalog and data volume. <em class="cite">Internal production metrics · Vue.ai, 2023–24.</em>',
+    priceAmount: '7–11L', priceCycle: 'one-time · 8 weeks to production',
+    priceFeatures: ['Real-time browse signal capture pipeline','Vector-based recommendation model serving','Personalized homepage, PDP, email, WhatsApp','A/B testing framework built in','Revenue attribution dashboard','30-day tuning window. Code is 100% yours.']
+  }
+};
+
+function switchSegment(el) {
+  document.querySelectorAll('.seg-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const d = segmentData[el.dataset.client];
+  if (!d) return;
+
+  document.getElementById('hero-title').innerHTML = d.heroTitle;
+  document.getElementById('hero-body').textContent = d.heroBody;
+  document.getElementById('prob-title').innerHTML = d.probTitle;
+  document.getElementById('prob-body').textContent = d.probBody;
+  document.getElementById('prob1-title').textContent = d.prob1Title;
+  document.getElementById('prob1-desc').textContent = d.prob1Desc;
+  document.getElementById('prob2-title').textContent = d.prob2Title;
+  document.getElementById('prob2-desc').textContent = d.prob2Desc;
+  document.getElementById('prob3-title').textContent = d.prob3Title;
+  document.getElementById('prob3-desc').textContent = d.prob3Desc;
+  document.getElementById('pain-number').textContent = d.painNumber;
+  document.getElementById('pain-text').innerHTML = d.painText;
+  document.getElementById('price-amount').textContent = d.priceAmount;
+  document.getElementById('price-cycle').textContent = d.priceCycle;
+  document.getElementById('price-features-list').innerHTML = d.priceFeatures.map(f => `<li>${f}</li>`).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Scroll reveal ────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ── Smooth anchor clicks ─────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
